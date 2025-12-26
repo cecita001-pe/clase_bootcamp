@@ -1,6 +1,6 @@
-
 import streamlit as st
 import requests
+import json
 
 # URL de tu webhook de Make
 MAKE_WEBHOOK_URL = "https://hook.us2.make.com/8ct8g0uhrjvuilct3f1re6sefrjuaqp6"  # <-- pon tu URL
@@ -23,7 +23,7 @@ if st.button("Enviar"):
                 response = requests.post(MAKE_WEBHOOK_URL, json=payload, timeout=60)
 
                 if response.status_code == 200:
-                    data = response.json()
+                    data = json.loads(response.text, strict=False)
 
                     # Se espera que Make devuelva {"respuesta": "..."}
                     respuesta = data.get("respuesta", "Make no envió 'respuesta' en el JSON.")
